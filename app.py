@@ -38,6 +38,86 @@ def print_all_gpu_by_price():
 
 
 
+def print_all_gpu_by_memory():
+    '''print all the GPUs sorted by memory'''
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "SELECT * from gpu ORDER BY memory DESC;"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    #loop thorugh all the results
+    print(f"name                          price memory  speed year manufacturer_id")
+    for gpu in results:
+        print(f"{gpu[1]:<30}{gpu[2]:<8}{gpu[3]:<6}{gpu[4]:<6}{gpu[5]:<6}{gpu[6]:<6}")
+    #loop finished here
+    db.close()
+
+
+
+def print_all_gpu_by_speed():
+    '''print all the GPUs sorted by speed'''
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "SELECT * from gpu ORDER BY speed DESC;"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    #loop thorugh all the results
+    print(f"name                          price memory  speed year manufacturer_id")
+    for gpu in results:
+        print(f"{gpu[1]:<30}{gpu[2]:<8}{gpu[3]:<6}{gpu[4]:<6}{gpu[5]:<6}{gpu[6]:<6}")
+    #loop finished here
+    db.close()
+
+
+
+def print_all_gpu_by_year():
+    '''print all the GPUs sorted by year released'''
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "SELECT * from gpu ORDER BY year_released DESC;"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    #loop thorugh all the results
+    print(f"name                          price memory  speed year manufacturer_id")
+    for gpu in results:
+        print(f"{gpu[1]:<30}{gpu[2]:<8}{gpu[3]:<6}{gpu[4]:<6}{gpu[5]:<6}{gpu[6]:<6}")
+    #loop finished here
+    db.close()
+
+
+
+def print_all_gpu_by_manufacturer():
+    #loop finished 
+    '''print all the GPUs sorted by manufacturer'''
+    manufacturer_name = input("Which manufacturer? ")
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    if manufacturer_name.upper() == "NVIDIA":
+        sql = "SELECT * from gpu WHERE manufacturer_id == '1';"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        #loop thorugh all the results
+        print(f"name                          price memory  speed year manufacturer_id")
+        for gpu in results:
+            print(f"{gpu[1]:<30}{gpu[2]:<8}{gpu[3]:<6}{gpu[4]:<6}{gpu[5]:<6}{gpu[6]:<6}")
+        db.close()
+    elif manufacturer_name.upper() == "AMD":
+        sql = "SELECT * from gpu WHERE manufacturer_id == '2';"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        #loop thorugh all the results
+        print(f"name                          price memory  speed year manufacturer_id")
+        for gpu in results:
+            print(f"{gpu[1]:<30}{gpu[2]:<8}{gpu[3]:<6}{gpu[4]:<6}{gpu[5]:<6}{gpu[6]:<6}")
+        db.close()
+    else:
+        print("That was not an option")
+
+    db.close()
+
+
+
+
 #main code
 while True:
     user_input = input(
@@ -45,7 +125,11 @@ while True:
 What would you like to do.
 1.Print all GPUs
 2.Print all GPUs sorted by price
-3.Exit
+3.Print all GPUs sorted by memory
+4.Print all GPUs sorted by speed
+5.Print all GPUs sorted by year released
+6.Print all GPUs sorted by manufacturer
+7.Exit
 
 """)
     if user_input == "1":
@@ -53,6 +137,14 @@ What would you like to do.
     elif user_input == "2":
         print_all_gpu_by_price()
     elif user_input == "3":
+        print_all_gpu_by_memory()
+    elif user_input == "4":
+        print_all_gpu_by_speed()
+    elif user_input == "5":
+        print_all_gpu_by_year()
+    elif user_input == "6":
+        print_all_gpu_by_manufacturer()
+    elif user_input == "7":
         break
     else:
-        print("That was not an option\n")
+        print("That was not an option")
