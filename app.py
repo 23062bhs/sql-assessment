@@ -132,6 +132,21 @@ def add_gpu():
 
 
 
+def delete_gpu():
+    name = input("Enter the name of the GPU to delete: ")
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "DELETE FROM gpu WHERE gpu_name = ?"
+    cursor.execute(sql, (name,))
+    db.commit()
+    if cursor.rowcount > 0:
+        print("GPU deleted")
+    else:
+        print("GPU not found")
+    db.close()
+
+
+
 #main code
 while True:
     user_input = input(
@@ -144,7 +159,8 @@ What would you like to do.
 5.Print all GPUs sorted by year released
 6.Print all GPUs sorted by manufacturer
 7.Add a new GPU
-8.Exit
+8.Delete a GPU
+9.Exit
 
 """)
     if user_input == "1":
@@ -162,6 +178,8 @@ What would you like to do.
     elif user_input == "7":
         add_gpu()
     elif user_input == "8":
+        delete_gpu()
+    elif user_input == "9":
         break
     else:
         print("That was not an option")
